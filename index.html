@@ -374,7 +374,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
 
@@ -557,6 +557,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
             gap: 32px;
             margin-top: 48px;
         }
@@ -570,11 +571,43 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            min-width: 140px;
+        }
+
+        .client-logo img {
+            max-width: 120px;
+            height: auto;
+        }
+
+        .client-logo .company-logo {
+            height: 32px;
+            width: auto;
+            max-width: 130px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
         }
 
         .client-logo:hover {
             background: rgba(255,255,255,0.12);
             color: white;
+            transform: translateY(-2px);
+        }
+
+        .client-logo:hover .company-logo {
+            opacity: 1;
+        }
+
+        .client-logo .logo-fallback {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
         }
 
         /* CTA Section */
@@ -1308,6 +1341,10 @@
         }
 
         /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1100px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 1000px) {
             .services-grid { grid-template-columns: 1fr; }
             .process-steps { grid-template-columns: repeat(2, 1fr); }
@@ -1473,19 +1510,43 @@
                 <section class="services-section">
                     <div class="section-header">
                         <h2>What We Build</h2>
-                        <p contenteditable="true">End-to-end automation solutions tailored to accounting and private equity workflows</p>
+                        <p contenteditable="true">End-to-end AI automation solutions tailored to accounting and finance workflows</p>
                     </div>
 
                     <div class="services-grid">
                         <div class="service-card">
                             <div class="service-icon">🤖</div>
-                            <h3 contenteditable="true">Process Automation</h3>
-                            <p contenteditable="true">Eliminate repetitive tasks and streamline your core operations</p>
+                            <h3 contenteditable="true">AI-Powered Automation</h3>
+                            <p contenteditable="true">Leverage intelligent automation to eliminate repetitive tasks</p>
                             <ul class="service-list">
                                 <li contenteditable="true">AP/AR/Payroll automation</li>
-                                <li contenteditable="true">Document processing & extraction</li>
-                                <li contenteditable="true">RPA & workflow automation</li>
-                                <li contenteditable="true">Custom APIs & webhooks</li>
+                                <li contenteditable="true">Intelligent document processing</li>
+                                <li contenteditable="true">AI workflow orchestration</li>
+                                <li contenteditable="true">Custom AI agents & assistants</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🔍</div>
+                            <h3 contenteditable="true">AI Capabilities Auditing</h3>
+                            <p contenteditable="true">Assess your organization's AI readiness and opportunities</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">AI maturity assessment</li>
+                                <li contenteditable="true">Use case identification & prioritization</li>
+                                <li contenteditable="true">Technology stack evaluation</li>
+                                <li contenteditable="true">AI roadmap development</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🧹</div>
+                            <h3 contenteditable="true">Data Cleanup & Preparation</h3>
+                            <p contenteditable="true">Get your data AI-ready with comprehensive cleanup services</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Data quality assessment</li>
+                                <li contenteditable="true">Data cleansing & normalization</li>
+                                <li contenteditable="true">Legacy system data migration</li>
+                                <li contenteditable="true">Data governance frameworks</li>
                             </ul>
                         </div>
 
@@ -1496,32 +1557,32 @@
                             <ul class="service-list">
                                 <li contenteditable="true">Reporting dashboards</li>
                                 <li contenteditable="true">Data consolidation & engineering</li>
-                                <li contenteditable="true">Legacy system migration</li>
-                                <li contenteditable="true">Analytics & visualization</li>
+                                <li contenteditable="true">Predictive analytics</li>
+                                <li contenteditable="true">Real-time visualization</li>
                             </ul>
                         </div>
 
                         <div class="service-card">
-                            <div class="service-icon">🧠</div>
-                            <h3 contenteditable="true">AI & Intelligence</h3>
-                            <p contenteditable="true">Leverage AI to work smarter, not harder</p>
+                            <div class="service-icon">🎓</div>
+                            <h3 contenteditable="true">Change Management & Training</h3>
+                            <p contenteditable="true">Ensure successful adoption with comprehensive support</p>
                             <ul class="service-list">
-                                <li contenteditable="true">Intelligent document extraction</li>
-                                <li contenteditable="true">AI assistants & RAG tools</li>
-                                <li contenteditable="true">Smart routing & classification</li>
-                                <li contenteditable="true">Custom AI agents</li>
+                                <li contenteditable="true">User training & workshops</li>
+                                <li contenteditable="true">Change management strategy</li>
+                                <li contenteditable="true">Documentation & playbooks</li>
+                                <li contenteditable="true">Ongoing support & coaching</li>
                             </ul>
                         </div>
 
                         <div class="service-card">
                             <div class="service-icon">🔗</div>
-                            <h3 contenteditable="true">Integration & Communications</h3>
-                            <p contenteditable="true">Connect your systems and automate communications</p>
+                            <h3 contenteditable="true">Integration & Infrastructure</h3>
+                            <p contenteditable="true">Connect your systems for seamless automation</p>
                             <ul class="service-list">
-                                <li contenteditable="true">System integrations</li>
-                                <li contenteditable="true">Voice bots & IVR solutions</li>
-                                <li contenteditable="true">Cloud infrastructure</li>
-                                <li contenteditable="true">API development</li>
+                                <li contenteditable="true">System integrations & APIs</li>
+                                <li contenteditable="true">Cloud infrastructure setup</li>
+                                <li contenteditable="true">Security & compliance</li>
+                                <li contenteditable="true">Scalable architecture design</li>
                             </ul>
                         </div>
                     </div>
@@ -1583,8 +1644,8 @@
                         <div class="why-card">
                             <div class="why-icon">🛠️</div>
                             <div>
-                                <h4 contenteditable="true">Full-Stack Capabilities</h4>
-                                <p contenteditable="true">From RPA to AI agents — one partner for all your automation needs</p>
+                                <h4 contenteditable="true">Full-Stack AI Capabilities</h4>
+                                <p contenteditable="true">From data cleanup to AI agents — one partner for all your automation needs</p>
                             </div>
                         </div>
                         <div class="why-card">
@@ -1605,20 +1666,41 @@
                     </div>
 
                     <div class="client-logos">
-                        <div class="client-logo" contenteditable="true">Deloitte</div>
-                        <div class="client-logo" contenteditable="true">NTT DATA</div>
-                        <div class="client-logo" contenteditable="true">Honeywell</div>
-                        <div class="client-logo" contenteditable="true">Freddie Mac</div>
-                        <div class="client-logo" contenteditable="true">Tokio Marine</div>
-                        <div class="client-logo" contenteditable="true">National Life Group</div>
-                        <div class="client-logo" contenteditable="true">SBA Communications</div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg" alt="Deloitte" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">Deloitte</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/NTT-Data-Logo.svg" alt="NTT DATA" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">NTT DATA</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Honeywell-Logo.svg" alt="Honeywell" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">Honeywell</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Freddie_Mac.svg" alt="Freddie Mac" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">Freddie Mac</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/f/f7/Tokio_Marine_logo.svg" alt="Tokio Marine" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">Tokio Marine</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/National_Life_Group_logo.png" alt="National Life Group" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">National Life Group</span>
+                        </div>
+                        <div class="client-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/8/81/SBA_Communications_logo.png" alt="SBA Communications" class="company-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="logo-fallback" style="display:none;">SBA Communications</span>
+                        </div>
                     </div>
                 </section>
 
                 <!-- CTA Section -->
                 <section class="cta-section">
-                    <h2 contenteditable="true">Ready to Automate?</h2>
-                    <p contenteditable="true">Let's discuss how we can eliminate manual work and scale your practice.</p>
+                    <h2 contenteditable="true">Ready to Transform with AI?</h2>
+                    <p contenteditable="true">Let's discuss how AI automation can eliminate manual work and scale your practice.</p>
                     <div class="cta-buttons">
                         <a href="#" class="btn btn-primary" contenteditable="true">Schedule Discovery Call</a>
                         <a href="#" class="btn btn-outline" onclick="switchTab('demo'); return false;">See Live Demo</a>
