@@ -53,6 +53,59 @@
             --nav-height: 64px;
         }
 
+        /* ==================== VIEW TOGGLE ==================== */
+        .view-toggle-container {
+            display: flex;
+            justify-content: center;
+            padding: 24px;
+            background: var(--bg-dark);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .view-toggle-btn {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .view-toggle-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .view-toggle-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view-toggle-btn .toggle-icon {
+            margin-right: 8px;
+        }
+
+        /* Content switching */
+        .services-view {
+            display: none;
+        }
+
+        .services-view.active {
+            display: block;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -344,6 +397,15 @@
             font-size: 0.85rem;
             color: var(--text-light-muted);
             margin-top: 4px;
+        }
+
+        /* Hero stats on light background */
+        .hero-stats.light-bg .hero-stat .label {
+            color: var(--text-secondary);
+        }
+
+        .hero-stats.light-bg .hero-stat .number {
+            color: var(--primary);
         }
 
         /* Services Section */
@@ -1506,6 +1568,21 @@
                     </div>
                 </section>
 
+                <!-- View Toggle -->
+                <div class="view-toggle-container">
+                    <div class="view-toggle">
+                        <button class="view-toggle-btn active" onclick="switchView('accounting')">
+                            <span class="toggle-icon">📊</span>Accounting & Operations
+                        </button>
+                        <button class="view-toggle-btn" onclick="switchView('pe')">
+                            <span class="toggle-icon">💼</span>PE Value Proposition
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========== ACCOUNTING & OPERATIONS VIEW ========== -->
+                <div id="accounting-view" class="services-view active">
+
                 <!-- Services Grid Section -->
                 <section class="services-section">
                     <div class="section-header">
@@ -1696,6 +1773,211 @@
                         </div>
                     </div>
                 </section>
+
+                </div><!-- End Accounting View -->
+
+                <!-- ========== PE VALUE PROPOSITION VIEW ========== -->
+                <div id="pe-view" class="services-view">
+
+                <!-- PE Hero Stats Override -->
+                <section class="services-section" style="padding-top: 32px;">
+                    <div class="section-header">
+                        <h2>Working Capital Value Creation</h2>
+                        <p contenteditable="true">Unlock cash, improve controls, and drive portfolio-wide efficiency</p>
+                    </div>
+
+                    <div class="hero-stats light-bg" style="justify-content: center; margin-bottom: 48px;">
+                        <div class="hero-stat">
+                            <div class="number" contenteditable="true">90-180</div>
+                            <div class="label">Days to Value</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="number" contenteditable="true">6-12</div>
+                            <div class="label">DPO Days Improvement</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="number" contenteditable="true">100%</div>
+                            <div class="label">Audit-Safe Controls</div>
+                        </div>
+                    </div>
+
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">💰</div>
+                            <h3 contenteditable="true">Working Capital Release</h3>
+                            <p contenteditable="true">Unlock trapped cash through optimized payment timing</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">DPO optimization & extension</li>
+                                <li contenteditable="true">Payment timing controls</li>
+                                <li contenteditable="true">Cash flow predictability</li>
+                                <li contenteditable="true">Vendor term optimization</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🛡️</div>
+                            <h3 contenteditable="true">Audit-Safe Controls</h3>
+                            <p contenteditable="true">Enterprise-grade controls that satisfy QoE requirements</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Human-in-the-loop approval gates</li>
+                                <li contenteditable="true">Complete audit trail & logging</li>
+                                <li contenteditable="true">DCAA / GovCon compliant</li>
+                                <li contenteditable="true">Exception handling & escalation</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🏢</div>
+                            <h3 contenteditable="true">Portfolio Scalability</h3>
+                            <p contenteditable="true">Standardize AP intake across messy portfolio systems</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Multi-ERP compatibility (QBO, NetSuite, Costpoint)</li>
+                                <li contenteditable="true">Repeatable playbook across portcos</li>
+                                <li contenteditable="true">Non-invasive overlay architecture</li>
+                                <li contenteditable="true">Rapid deployment (no ERP disruption)</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">⚡</div>
+                            <h3 contenteditable="true">Fast Time-to-Value</h3>
+                            <p contenteditable="true">Immediate post-close impact without system overhaul</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">90-180 day full deployment</li>
+                                <li contenteditable="true">Vendor-by-vendor rollout</li>
+                                <li contenteditable="true">Pilot-to-production pathway</li>
+                                <li contenteditable="true">Measurable ROI within 60 days</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">📈</div>
+                            <h3 contenteditable="true">Value-Based Metrics</h3>
+                            <p contenteditable="true">Track what matters to PE: cash, not keystrokes</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">DPO achieved vs baseline</li>
+                                <li contenteditable="true">% of AP spend under automation</li>
+                                <li contenteditable="true">% invoices paid on agreed terms</li>
+                                <li contenteditable="true">Cash timing variance reduction</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🤝</div>
+                            <h3 contenteditable="true">Working Capital Diagnostic</h3>
+                            <p contenteditable="true">Quantify upside before committing to full rollout</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Baseline DPO assessment</li>
+                                <li contenteditable="true">Automation opportunity mapping</li>
+                                <li contenteditable="true">Cash release projection</li>
+                                <li contenteditable="true">Implementation roadmap</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PE Process Section -->
+                <section class="services-section process-section">
+                    <div class="section-header">
+                        <h2>Engagement Model</h2>
+                        <p contenteditable="true">From diagnostic to value realization</p>
+                    </div>
+
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="process-num">1</div>
+                            <h4 contenteditable="true">Diagnostic</h4>
+                            <p contenteditable="true">4-week pilot to quantify working capital upside</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">2</div>
+                            <h4 contenteditable="true">Proof of Value</h4>
+                            <p contenteditable="true">Measurable DPO improvement on pilot vendors</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">3</div>
+                            <h4 contenteditable="true">Scale</h4>
+                            <p contenteditable="true">Roll out across full vendor base & portfolio</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">4</div>
+                            <h4 contenteditable="true">Optimize</h4>
+                            <p contenteditable="true">Ongoing support tied to cash outcomes</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PE Why Us Section -->
+                <section class="services-section">
+                    <div class="section-header">
+                        <h2>Why Partner With Us</h2>
+                        <p contenteditable="true">Built for PE-backed finance teams</p>
+                    </div>
+
+                    <div class="why-grid">
+                        <div class="why-card">
+                            <div class="why-icon">🎯</div>
+                            <div>
+                                <h4 contenteditable="true">Outcome-Based Pricing</h4>
+                                <p contenteditable="true">Success fees tied to cash unlocked, not hours worked</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">🔐</div>
+                            <div>
+                                <h4 contenteditable="true">Controls-First Design</h4>
+                                <p contenteditable="true">Human-in-the-loop is a feature, not a limitation — PE buyers need oversight</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">🏢</div>
+                            <div>
+                                <h4 contenteditable="true">Enterprise Pedigree</h4>
+                                <p contenteditable="true">Solutions deployed at Deloitte, Honeywell, Tokio Marine, Freddie Mac</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">📋</div>
+                            <div>
+                                <h4 contenteditable="true">Fund-Level Playbook</h4>
+                                <p contenteditable="true">Repeatable across portfolio companies with minimal customization</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PE Pricing Section -->
+                <section class="services-section" style="background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+                    <div class="section-header">
+                        <h2>Commercial Structure</h2>
+                        <p contenteditable="true">Aligned incentives from pilot to scale</p>
+                    </div>
+
+                    <div class="services-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="service-card" style="text-align: center;">
+                            <div class="service-icon" style="margin: 0 auto 20px;">🔍</div>
+                            <h3 contenteditable="true">Diagnostic Pilot</h3>
+                            <p style="font-size: 2rem; font-weight: 800; color: var(--primary); margin: 16px 0;" contenteditable="true">$20K–$40K</p>
+                            <p contenteditable="true">4-week assessment to quantify working capital opportunity</p>
+                        </div>
+
+                        <div class="service-card" style="text-align: center; border-color: var(--primary); background: var(--primary-light);">
+                            <div class="service-icon" style="margin: 0 auto 20px;">🚀</div>
+                            <h3 contenteditable="true">Production Rollout</h3>
+                            <p style="font-size: 2rem; font-weight: 800; color: var(--primary); margin: 16px 0;" contenteditable="true">$75K–$150K</p>
+                            <p contenteditable="true">Full deployment + 5–10% of cash unlocked</p>
+                        </div>
+
+                        <div class="service-card" style="text-align: center;">
+                            <div class="service-icon" style="margin: 0 auto 20px;">🔄</div>
+                            <h3 contenteditable="true">Ongoing Support</h3>
+                            <p style="font-size: 2rem; font-weight: 800; color: var(--primary); margin: 16px 0;" contenteditable="true">Retainer</p>
+                            <p contenteditable="true">Continuous optimization tied to outcomes</p>
+                        </div>
+                    </div>
+                </section>
+
+                </div><!-- End PE View -->
 
                 <!-- CTA Section -->
                 <section class="cta-section">
@@ -2079,6 +2361,17 @@
             
             document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById(`${tab}-tab`).classList.add('active');
+        }
+
+        // ==================== VIEW SWITCHING (Services Page) ====================
+        function switchView(view) {
+            // Update toggle buttons
+            document.querySelectorAll('.view-toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.view-toggle-btn[onclick="switchView('${view}')"]`).classList.add('active');
+            
+            // Update view content
+            document.querySelectorAll('.services-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`${view}-view`).classList.add('active');
         }
 
         // ==================== EDIT MODE ====================
