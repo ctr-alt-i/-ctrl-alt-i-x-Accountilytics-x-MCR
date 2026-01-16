@@ -97,12 +97,40 @@
             margin-right: 8px;
         }
 
+        /* Light background toggle variant */
+        .view-toggle.light-bg {
+            background: var(--border);
+        }
+
+        .view-toggle.light-bg .view-toggle-btn {
+            color: var(--text-secondary);
+        }
+
+        .view-toggle.light-bg .view-toggle-btn:hover {
+            color: var(--text-primary);
+            background: rgba(0,0,0,0.05);
+        }
+
+        .view-toggle.light-bg .view-toggle-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
         /* Content switching */
         .services-view {
             display: none;
         }
 
         .services-view.active {
+            display: block;
+        }
+
+        /* Calculator view switching */
+        .calc-view {
+            display: none;
+        }
+
+        .calc-view.active {
             display: block;
         }
 
@@ -2282,73 +2310,185 @@
             <div class="calculator-container">
                 <header class="calculator-header">
                     <h1>ROI Calculator</h1>
-                    <p>See your potential savings with automation</p>
+                    <p>Quantify your potential value creation</p>
                 </header>
 
-                <div class="calculator-grid">
-                    <div class="calc-inputs">
-                        <h3>Your Current Situation</h3>
-                        
-                        <div class="input-group">
-                            <label>Hours spent on manual tasks per week</label>
-                            <input type="number" id="hoursPerWeek" value="20" oninput="calculateROI()">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Average hourly labor cost ($)</label>
-                            <input type="number" id="hourlyRate" value="35" oninput="calculateROI()">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Current error rate (%)</label>
-                            <input type="number" id="errorRate" value="3" step="0.1" oninput="calculateROI()">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Cost per error to fix ($)</label>
-                            <input type="number" id="errorCost" value="50" oninput="calculateROI()">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Items processed per month</label>
-                            <input type="number" id="itemsPerMonth" value="500" oninput="calculateROI()">
-                        </div>
-                    </div>
+                <!-- Calculator Toggle -->
+                <div class="view-toggle light-bg" style="margin: 0 auto 32px; width: fit-content;">
+                    <button class="view-toggle-btn active" onclick="switchCalcView('operational')">
+                        <span class="toggle-icon">⏱️</span>Operational ROI
+                    </button>
+                    <button class="view-toggle-btn" onclick="switchCalcView('working-capital')">
+                        <span class="toggle-icon">💰</span>Working Capital Value
+                    </button>
+                </div>
 
-                    <div class="calc-results">
-                        <h3>Your Potential Savings</h3>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Current monthly labor cost</span>
-                            <span class="result-value" id="currentLabor">$2,800</span>
+                <!-- ========== OPERATIONAL ROI VIEW ========== -->
+                <div id="operational-calc" class="calc-view active">
+                    <div class="calculator-grid">
+                        <div class="calc-inputs">
+                            <h3>Your Current Situation</h3>
+                            
+                            <div class="input-group">
+                                <label>Hours spent on manual tasks per week</label>
+                                <input type="number" id="hoursPerWeek" value="20" oninput="calculateROI()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Average hourly labor cost ($)</label>
+                                <input type="number" id="hourlyRate" value="35" oninput="calculateROI()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Current error rate (%)</label>
+                                <input type="number" id="errorRate" value="3" step="0.1" oninput="calculateROI()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Cost per error to fix ($)</label>
+                                <input type="number" id="errorCost" value="50" oninput="calculateROI()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Items processed per month</label>
+                                <input type="number" id="itemsPerMonth" value="500" oninput="calculateROI()">
+                            </div>
                         </div>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Current monthly error cost</span>
-                            <span class="result-value" id="currentErrors">$750</span>
-                        </div>
-                        
-                        <div class="result-item">
-                            <span class="result-label">New monthly labor cost (90% reduction)</span>
-                            <span class="result-value" id="newLabor">$280</span>
-                        </div>
-                        
-                        <div class="result-item">
-                            <span class="result-label">New monthly error cost (95% reduction)</span>
-                            <span class="result-value" id="newErrors">$38</span>
-                        </div>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Monthly Savings</span>
-                            <span class="result-value highlight" id="monthlySavings">$3,232</span>
-                        </div>
-                        
-                        <div class="result-item">
-                            <span class="result-label">Annual Savings</span>
-                            <span class="result-value highlight" id="annualSavings">$38,784</span>
+
+                        <div class="calc-results">
+                            <h3>Your Potential Savings</h3>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Current monthly labor cost</span>
+                                <span class="result-value" id="currentLabor">$2,800</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Current monthly error cost</span>
+                                <span class="result-value" id="currentErrors">$750</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">New monthly labor cost (90% reduction)</span>
+                                <span class="result-value" id="newLabor">$280</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">New monthly error cost (95% reduction)</span>
+                                <span class="result-value" id="newErrors">$38</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Monthly Savings</span>
+                                <span class="result-value highlight" id="monthlySavings">$3,232</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Annual Savings</span>
+                                <span class="result-value highlight" id="annualSavings">$38,784</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- ========== WORKING CAPITAL VALUE VIEW ========== -->
+                <div id="working-capital-calc" class="calc-view">
+                    <div class="calculator-grid">
+                        <div class="calc-inputs">
+                            <h3>Working Capital Inputs</h3>
+                            
+                            <div class="input-group">
+                                <label>Monthly AP Spend ($)</label>
+                                <input type="number" id="monthlyAPSpend" value="500000" oninput="calculateWorkingCapital()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Current DPO (Days Payable Outstanding)</label>
+                                <input type="number" id="currentDPO" value="25" oninput="calculateWorkingCapital()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Target DPO Improvement (days)</label>
+                                <input type="number" id="dpoImprovement" value="8" oninput="calculateWorkingCapital()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>% of AP Spend to Automate</label>
+                                <input type="number" id="apAutomatePercent" value="60" step="5" oninput="calculateWorkingCapital()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Cost of Capital / Interest Rate (%)</label>
+                                <input type="number" id="costOfCapital" value="8" step="0.5" oninput="calculateWorkingCapital()">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Number of Portfolio Companies</label>
+                                <input type="number" id="numPortcos" value="1" oninput="calculateWorkingCapital()">
+                            </div>
+                        </div>
+
+                        <div class="calc-results">
+                            <h3>Working Capital Impact</h3>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Annual AP Spend</span>
+                                <span class="result-value" id="annualAPSpend">$6,000,000</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Daily AP Cash Flow</span>
+                                <span class="result-value" id="dailyAPCash">$16,438</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">AP Spend Under Automation</span>
+                                <span class="result-value" id="apUnderAutomation">$3,600,000</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">New Target DPO</span>
+                                <span class="result-value" id="newDPO">33 days</span>
+                            </div>
+                            
+                            <div class="result-item" style="border-top: 2px solid var(--border); padding-top: 20px; margin-top: 8px;">
+                                <span class="result-label">Cash Unlocked (One-Time)</span>
+                                <span class="result-value highlight" id="cashUnlocked">$78,904</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-label">Annual Interest Savings</span>
+                                <span class="result-value highlight" id="interestSavings">$6,312</span>
+                            </div>
+
+                            <div class="result-item" style="border-top: 2px solid var(--primary); padding-top: 20px; margin-top: 8px; background: var(--primary-light); margin: 8px -32px -32px; padding: 20px 32px; border-radius: 0 0 16px 16px;">
+                                <span class="result-label" style="font-weight: 700; color: var(--primary);">Total Portfolio Cash Unlocked</span>
+                                <span class="result-value highlight" id="portfolioCashUnlocked" style="font-size: 1.75rem;">$78,904</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Value Context -->
+                    <div class="calc-context" style="margin-top: 32px; padding: 24px; background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px;">
+                        <h4 style="margin-bottom: 12px; color: var(--text-primary);">📊 What This Means</h4>
+                        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+                            By extending DPO by <strong id="contextDPO">8 days</strong> on <strong id="contextPercent">60%</strong> of AP spend, 
+                            you retain <strong id="contextCash">$78,904</strong> in cash that would otherwise leave the business earlier. 
+                            This is permanent working capital improvement — money that stays on your balance sheet.
+                        </p>
+                        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 200px; padding: 16px; background: var(--accent-light); border-radius: 8px;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px;">Typical Pilot Result</div>
+                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">38% of AP automated in 4 weeks</div>
+                            </div>
+                            <div style="flex: 1; min-width: 200px; padding: 16px; background: var(--primary-light); border-radius: 8px;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px;">Success-Based Pricing</div>
+                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">5-10% of cash unlocked</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
@@ -2372,6 +2512,64 @@
             // Update view content
             document.querySelectorAll('.services-view').forEach(v => v.classList.remove('active'));
             document.getElementById(`${view}-view`).classList.add('active');
+        }
+
+        // ==================== CALCULATOR VIEW SWITCHING ====================
+        function switchCalcView(view) {
+            // Update toggle buttons in calculator
+            const calcToggles = document.querySelectorAll('#calculator-tab .view-toggle-btn');
+            calcToggles.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.view-toggle-btn[onclick="switchCalcView('${view}')"]`).classList.add('active');
+            
+            // Update calc view content
+            document.querySelectorAll('.calc-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`${view}-calc`).classList.add('active');
+
+            // Recalculate the active view
+            if (view === 'operational') {
+                calculateROI();
+            } else {
+                calculateWorkingCapital();
+            }
+        }
+
+        // ==================== WORKING CAPITAL CALCULATOR ====================
+        function calculateWorkingCapital() {
+            const monthlyAPSpend = parseFloat(document.getElementById('monthlyAPSpend').value) || 0;
+            const currentDPO = parseFloat(document.getElementById('currentDPO').value) || 0;
+            const dpoImprovement = parseFloat(document.getElementById('dpoImprovement').value) || 0;
+            const apAutomatePercent = parseFloat(document.getElementById('apAutomatePercent').value) || 0;
+            const costOfCapital = parseFloat(document.getElementById('costOfCapital').value) || 0;
+            const numPortcos = parseFloat(document.getElementById('numPortcos').value) || 1;
+
+            // Calculations
+            const annualAPSpend = monthlyAPSpend * 12;
+            const dailyAPCash = annualAPSpend / 365;
+            const apUnderAutomation = annualAPSpend * (apAutomatePercent / 100);
+            const newDPO = currentDPO + dpoImprovement;
+            
+            // Cash unlocked = daily AP spend * DPO improvement * % automated
+            const cashUnlocked = dailyAPCash * dpoImprovement * (apAutomatePercent / 100);
+            
+            // Annual interest savings on the cash unlocked
+            const interestSavings = cashUnlocked * (costOfCapital / 100);
+            
+            // Portfolio total
+            const portfolioCashUnlocked = cashUnlocked * numPortcos;
+
+            // Update display
+            document.getElementById('annualAPSpend').textContent = formatCurrency(annualAPSpend);
+            document.getElementById('dailyAPCash').textContent = formatCurrency(dailyAPCash);
+            document.getElementById('apUnderAutomation').textContent = formatCurrency(apUnderAutomation);
+            document.getElementById('newDPO').textContent = newDPO + ' days';
+            document.getElementById('cashUnlocked').textContent = formatCurrency(cashUnlocked);
+            document.getElementById('interestSavings').textContent = formatCurrency(interestSavings);
+            document.getElementById('portfolioCashUnlocked').textContent = formatCurrency(portfolioCashUnlocked);
+
+            // Update context section
+            document.getElementById('contextDPO').textContent = dpoImprovement + ' days';
+            document.getElementById('contextPercent').textContent = apAutomatePercent + '%';
+            document.getElementById('contextCash').textContent = formatCurrency(cashUnlocked);
         }
 
         // ==================== EDIT MODE ====================
@@ -2453,6 +2651,7 @@
         // ==================== INITIALIZE ====================
         document.addEventListener('DOMContentLoaded', () => {
             calculateROI();
+            calculateWorkingCapital();
             applyConfig(config);
         });
     </script>
