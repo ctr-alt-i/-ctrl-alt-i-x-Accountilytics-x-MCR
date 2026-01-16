@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteTitle">CTRL.ALT.I X Accountilytics X MCR | Client Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Brand Colors - Professional Slate/Navy */
+            --primary: #3B5998;
+            --primary-dark: #2D4373;
+            --primary-light: #E8EDF5;
+            --primary-glow: rgba(59, 89, 152, 0.25);
+            
+            /* Accent Color */
+            --accent: #10B981;
+            --accent-light: #D1FAE5;
+            
+            /* Neutral Palette */
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --bg-dark: #0F172A;
+            --bg-darker: #020617;
+            --bg-card: #1E293B;
+            
+            /* Text Colors */
+            --text-primary: #1E293B;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-light: #FFFFFF;
+            --text-light-muted: rgba(255,255,255,0.7);
+            
+            /* Status Colors */
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            
+            /* Borders & Shadows */
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --border-dark: rgba(255,255,255,0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.15);
+            
+            /* Typography */
+            --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            
+            /* Spacing */
+            --nav-height: 64px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-light);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ==================== EDIT MODE STYLES ==================== */
+        body.edit-mode [contenteditable="true"] {
+            outline: 2px dashed var(--accent);
+            outline-offset: 4px;
+            cursor: text;
+            border-radius: 4px;
+        }
+
+        body.edit-mode [contenteditable="true"]:focus {
+            outline: 2px solid var(--accent);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        body.edit-mode [contenteditable="true"]:hover {
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .edit-indicator {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: var(--accent);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 9999;
+            box-shadow: var(--shadow-md);
+            animation: pulse-glow 2s infinite;
+        }
+
+        body.edit-mode .edit-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 8px transparent; }
+        }
+
+        /* ==================== TOP NAVIGATION ==================== */
+        .top-nav {
+            background: var(--bg-dark);
+            padding: 0 32px;
+            height: var(--nav-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: white;
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo .dot {
+            color: var(--accent);
+        }
+
+        /* Partner Branding Styles */
+        .partner-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .partner-brand .brand-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .partner-brand .brand-x {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .partner-brand .brand-logo {
+            height: 28px;
+            width: auto;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-client {
+            font-weight: 500;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.08);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Nav Actions */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.8);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-top: var(--nav-height);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ==================== SERVICES TAB ==================== */
+        .services-container {
+            background: var(--bg-light);
+            min-height: calc(100vh - var(--nav-height));
+        }
+
+        /* Hero Section */
+        .services-hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+            padding: 80px 24px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .services-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .services-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .services-hero h1 .highlight {
+            color: var(--accent);
+        }
+
+        .services-hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light-muted);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: var(--font-mono);
+        }
+
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: var(--text-light-muted);
+            margin-top: 4px;
+        }
+
+        /* Services Section */
+        .services-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .service-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Process Section */
+        .process-section {
+            background: var(--bg-white);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 32px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        .process-num {
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 16px;
+        }
+
+        .process-step h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Why Us Section */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .why-card {
+            display: flex;
+            gap: 20px;
+            padding: 28px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .why-card:hover {
+            border-color: var(--accent);
+        }
+
+        .why-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .why-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .why-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Experience Section */
+        .experience-section {
+            background: var(--bg-dark);
+            color: white;
+        }
+
+        .experience-section .section-header h2 {
+            color: white;
+        }
+
+        .experience-section .section-header p {
+            color: var(--text-light-muted);
+        }
+
+        .client-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .client-logo {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px 32px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .client-logo:hover {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 24px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-light) 100%);
+        }
+
+        .cta-section h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ==================== PRESENTATION TAB ==================== */
+        .presentation-container {
+            background: var(--bg-dark);
+            min-height: calc(100vh - var(--nav-height));
+            color: var(--text-light);
+        }
+
+        .slides-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        /* Slide Base */
+        .slide {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 56px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-dark);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        .slide-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            font-family: var(--font-mono);
+        }
+
+        .slide h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .slide h2 .highlight {
+            color: var(--accent);
+        }
+
+        .slide h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 28px 0 16px;
+            color: var(--accent);
+        }
+
+        .slide p {
+            color: var(--text-light-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .slide ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .slide ul li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 14px;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .slide ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Workflow Visual */
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 36px 0;
+            flex-wrap: wrap;
+        }
+
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .workflow-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px var(--primary-glow);
+        }
+
+        .workflow-step span {
+            font-size: 0.85rem;
+            color: var(--text-light-muted);
+            font-weight: 500;
+        }
+
+        .workflow-arrow {
+            color: var(--primary);
+            font-size: 28px;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 28px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .comparison-table th {
+            background: rgba(59, 89, 152, 0.2);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .comparison-table td {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .comparison-table tbody tr:hover td {
+            background: rgba(255,255,255,0.03);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .feature-card-slide {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 24px;
+            background: rgba(59, 89, 152, 0.1);
+            border-radius: 14px;
+            border: 1px solid rgba(59, 89, 152, 0.2);
+        }
+
+        .feature-icon-slide {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .feature-text-slide strong {
+            display: block;
+            color: white;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        .feature-text-slide span {
+            font-size: 0.95rem;
+            color: var(--text-light-muted);
+            line-height: 1.5;
+        }
+
+        /* ROI Grid */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .roi-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            border: 1px solid var(--border-dark);
+        }
+
+        .roi-card .label {
+            font-size: 0.85rem;
+            color: var(--text-light-muted);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .roi-card .before {
+            font-size: 1.5rem;
+            color: var(--danger);
+            font-weight: 700;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .roi-card .after {
+            font-size: 2.25rem;
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        /* Big Number Highlight */
+        .big-number {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(59, 89, 152, 0.15), rgba(59, 89, 152, 0.05));
+            border-radius: 20px;
+            margin: 32px 0;
+            border: 1px solid rgba(59, 89, 152, 0.2);
+        }
+
+        .big-number .number {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            font-family: var(--font-mono);
+        }
+
+        .big-number .label {
+            font-size: 1.1rem;
+            color: var(--text-light-muted);
+            margin-top: 12px;
+        }
+
+        /* Checklist */
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin: 28px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+
+        .checklist-item .check {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .checklist-item span {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Steps Timeline */
+        .steps {
+            margin: 28px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 48px;
+            bottom: -24px;
+            width: 2px;
+            background: var(--border-dark);
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        .step-content p {
+            font-size: 0.95rem;
+            color: var(--text-light-muted);
+            margin: 0;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: rgba(59, 89, 152, 0.12);
+            border-left: 4px solid var(--primary);
+            padding: 24px 28px;
+            border-radius: 0 14px 14px 0;
+            margin: 28px 0;
+        }
+
+        .callout p {
+            margin: 0;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        /* CTA Slide */
+        .slide.cta-slide {
+            text-align: center;
+            padding: 72px 56px;
+            background: linear-gradient(135deg, var(--bg-card), rgba(59, 89, 152, 0.15));
+        }
+
+        .cta-slide h2 {
+            font-size: 2.5rem;
+        }
+
+        .slide .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .slide .btn-primary {
+            background: var(--accent);
+        }
+
+        .slide .btn-primary:hover {
+            background: #0D9669;
+        }
+
+        .slide .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .slide .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ==================== DEMO TAB ==================== */
+        .demo-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .demo-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .demo-header p {
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .stat-card.green .stat-value { color: var(--success); }
+        .stat-card.red .stat-value { color: var(--danger); }
+        .stat-card.blue .stat-value { color: var(--info); }
+
+        .demo-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .demo-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-card-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .demo-card-body {
+            padding: 24px;
+        }
+
+        .placeholder-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .placeholder-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* ==================== CALCULATOR TAB ==================== */
+        .calculator-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .calculator-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .calculator-header p {
+            color: var(--text-secondary);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .calc-inputs, .calc-results {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calc-inputs h3, .calc-results h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .result-value.highlight {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        /* ==================== PDF EXPORT OVERLAY ==================== */
+        .pdf-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-overlay.active {
+            display: flex;
+        }
+
+        .pdf-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .pdf-modal h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .pdf-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .pdf-instructions {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .pdf-instructions ol {
+            margin-left: 20px;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .pdf-instructions code {
+            background: var(--primary-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1000px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .process-step:not(:last-child)::after { display: none; }
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .calculator-grid { grid-template-columns: 1fr; }
+            .feature-grid, .roi-grid, .checklist { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .tab-nav { display: none; }
+            .nav-actions { gap: 8px; }
+            .nav-btn span { display: none; }
+            .workflow { flex-direction: column; }
+            .workflow-arrow { transform: rotate(90deg); }
+            .slide { padding: 36px 24px; }
+            .slide h2 { font-size: 1.75rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .big-number .number { font-size: 3rem; }
+            .services-hero h1 { font-size: 2rem; }
+            .hero-stats { gap: 32px; }
+            .process-steps { grid-template-columns: 1fr; }
+            
+            /* Partner brand responsive */
+            .partner-brand { gap: 6px; }
+            .partner-brand .brand-x { font-size: 0.75rem; }
+            .partner-brand .brand-logo { height: 22px; }
+            .nav-divider { display: none; }
+            .nav-client { display: none; }
+        }
+
+        /* ==================== PRINT STYLES ==================== */
+        @media print {
+            .top-nav, .edit-indicator, .pdf-overlay { display: none !important; }
+            .main-content { margin-top: 0; }
+            .slide { 
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 24px;
+            }
+            .presentation-container {
+                background: white;
+                color: black;
+            }
+            .slide {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+            }
+            .slide h2, .slide h3 { color: #333; }
+            .slide h2 .highlight { color: var(--primary); }
+            .slide p, .slide ul li { color: #555; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Edit Mode Indicator -->
+    <div class="edit-indicator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        EDIT MODE — Click any highlighted text to edit
+    </div>
+
+    <!-- PDF Export Overlay -->
+    <div class="pdf-overlay" id="pdfOverlay">
+        <div class="pdf-modal">
+            <h3>📄 Export to PDF</h3>
+            <p>Use your browser's print function to save as PDF:</p>
+            <div class="pdf-instructions">
+                <ol>
+                    <li>Press <code>Ctrl+P</code> (Windows) or <code>⌘+P</code> (Mac)</li>
+                    <li>Select <strong>"Save as PDF"</strong> as the destination</li>
+                    <li>Choose <strong>"Background graphics"</strong> for full styling</li>
+                    <li>Click <strong>Save</strong></li>
+                </ol>
+            </div>
+            <button class="btn btn-primary" onclick="window.print(); closePdfModal();">Print Now</button>
+            <button class="btn btn-outline" onclick="closePdfModal()" style="margin-left: 12px;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <div class="partner-brand">
+                <div class="brand-item">
+                    <span class="nav-logo">CTRL<span class="dot">.</span>ALT<span class="dot">.</span>I</span>
+                </div>
+                <span class="brand-x">✕</span>
+                <div class="brand-item">
+                    <img src="https://assets.cdn.filesafe.space/lgAzxPrAjp7HisCZ2kHe/media/6954a927edb8a2806bf9f7be.png" alt="Accountilytics" class="brand-logo">
+                </div>
+                <span class="brand-x">✕</span>
+                <div class="brand-item">
+                    <img src="https://mcrconsulting.com/wp-content/uploads/2023/01/1.PNG_1674683833.jpg" alt="MCR Consulting" class="brand-logo">
+                </div>
+            </div>
+            <div class="nav-divider"></div>
+            <div class="nav-client" id="navClient" contenteditable="true">Prepared for: Client Name</div>
+        </div>
+        
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('services')">Services</button>
+            <button class="tab-btn" onclick="switchTab('presentation')">Presentation</button>
+            <button class="tab-btn" onclick="switchTab('demo')">Live Demo</button>
+            <button class="tab-btn" onclick="switchTab('calculator')">ROI Calculator</button>
+        </div>
+
+        <div class="nav-actions">
+            <button class="nav-btn" id="editToggle" onclick="toggleEditMode()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span>Edit</span>
+            </button>
+            <button class="nav-btn" onclick="openPdfModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <span>PDF</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- ==================== SERVICES TAB ==================== -->
+        <div id="services-tab" class="tab-content active">
+            <div class="services-container">
+                
+                <!-- Hero Section -->
+                <section class="services-hero">
+                    <div class="services-hero-content">
+                        <h1 contenteditable="true">AI-Powered Automation for <span class="highlight">Modern Accounting</span></h1>
+                        <p class="subtitle" contenteditable="true">We build custom solutions that eliminate manual work, reduce errors, and scale your practice</p>
+                        
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="number" contenteditable="true">8+</div>
+                                <div class="label">Years Experience</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number" contenteditable="true">100s</div>
+                                <div class="label">Automations Deployed</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number" contenteditable="true">Enterprise</div>
+                                <div class="label">Proven Solutions</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Grid Section -->
+                <section class="services-section">
+                    <div class="section-header">
+                        <h2>What We Build</h2>
+                        <p contenteditable="true">End-to-end automation solutions tailored to accounting and private equity workflows</p>
+                    </div>
+
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">🤖</div>
+                            <h3 contenteditable="true">Process Automation</h3>
+                            <p contenteditable="true">Eliminate repetitive tasks and streamline your core operations</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">AP/AR/Payroll automation</li>
+                                <li contenteditable="true">Document processing & extraction</li>
+                                <li contenteditable="true">RPA & workflow automation</li>
+                                <li contenteditable="true">Custom APIs & webhooks</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">📊</div>
+                            <h3 contenteditable="true">Data & Analytics</h3>
+                            <p contenteditable="true">Turn your data into actionable insights</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Reporting dashboards</li>
+                                <li contenteditable="true">Data consolidation & engineering</li>
+                                <li contenteditable="true">Legacy system migration</li>
+                                <li contenteditable="true">Analytics & visualization</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🧠</div>
+                            <h3 contenteditable="true">AI & Intelligence</h3>
+                            <p contenteditable="true">Leverage AI to work smarter, not harder</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">Intelligent document extraction</li>
+                                <li contenteditable="true">AI assistants & RAG tools</li>
+                                <li contenteditable="true">Smart routing & classification</li>
+                                <li contenteditable="true">Custom AI agents</li>
+                            </ul>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-icon">🔗</div>
+                            <h3 contenteditable="true">Integration & Communications</h3>
+                            <p contenteditable="true">Connect your systems and automate communications</p>
+                            <ul class="service-list">
+                                <li contenteditable="true">System integrations</li>
+                                <li contenteditable="true">Voice bots & IVR solutions</li>
+                                <li contenteditable="true">Cloud infrastructure</li>
+                                <li contenteditable="true">API development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Process Section -->
+                <section class="services-section process-section">
+                    <div class="section-header">
+                        <h2>How We Work</h2>
+                        <p contenteditable="true">A proven approach to delivering solutions that work</p>
+                    </div>
+
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="process-num">1</div>
+                            <h4 contenteditable="true">Discovery</h4>
+                            <p contenteditable="true">Map your workflows and identify automation opportunities</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">2</div>
+                            <h4 contenteditable="true">Design</h4>
+                            <p contenteditable="true">Custom solution architecture tailored to your needs</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">3</div>
+                            <h4 contenteditable="true">Build</h4>
+                            <p contenteditable="true">Development, testing, and deployment</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-num">4</div>
+                            <h4 contenteditable="true">Support</h4>
+                            <p contenteditable="true">Training, documentation, and ongoing maintenance</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Why Us Section -->
+                <section class="services-section">
+                    <div class="section-header">
+                        <h2>Why CTRL.ALT.I</h2>
+                        <p contenteditable="true">Enterprise experience, boutique attention</p>
+                    </div>
+
+                    <div class="why-grid">
+                        <div class="why-card">
+                            <div class="why-icon">🏢</div>
+                            <div>
+                                <h4 contenteditable="true">Enterprise-Proven</h4>
+                                <p contenteditable="true">Built solutions for Deloitte, Honeywell, Tokio Marine, Freddie Mac, and more</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">🔐</div>
+                            <div>
+                                <h4 contenteditable="true">You Own It</h4>
+                                <p contenteditable="true">Self-hosted solutions with no vendor lock-in — your data stays yours</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">🛠️</div>
+                            <div>
+                                <h4 contenteditable="true">Full-Stack Capabilities</h4>
+                                <p contenteditable="true">From RPA to AI agents — one partner for all your automation needs</p>
+                            </div>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon">📋</div>
+                            <div>
+                                <h4 contenteditable="true">Accounting-Focused</h4>
+                                <p contenteditable="true">We understand AP/AR, payroll, and the workflows that matter to you</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experience Section -->
+                <section class="services-section experience-section">
+                    <div class="section-header">
+                        <h2>Experience That Matters</h2>
+                        <p contenteditable="true">Solutions deployed at leading organizations</p>
+                    </div>
+
+                    <div class="client-logos">
+                        <div class="client-logo" contenteditable="true">Deloitte</div>
+                        <div class="client-logo" contenteditable="true">NTT DATA</div>
+                        <div class="client-logo" contenteditable="true">Honeywell</div>
+                        <div class="client-logo" contenteditable="true">Freddie Mac</div>
+                        <div class="client-logo" contenteditable="true">Tokio Marine</div>
+                        <div class="client-logo" contenteditable="true">National Life Group</div>
+                        <div class="client-logo" contenteditable="true">SBA Communications</div>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <section class="cta-section">
+                    <h2 contenteditable="true">Ready to Automate?</h2>
+                    <p contenteditable="true">Let's discuss how we can eliminate manual work and scale your practice.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary" contenteditable="true">Schedule Discovery Call</a>
+                        <a href="#" class="btn btn-outline" onclick="switchTab('demo'); return false;">See Live Demo</a>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- ==================== PRESENTATION TAB ==================== -->
+        <div id="presentation-tab" class="tab-content">
+            <div class="presentation-container">
+                <div class="slides-wrapper">
+                    
+                    <!-- Slide 1: Title/Problem -->
+                    <div class="slide">
+                        <span class="slide-number">01</span>
+                        <h2 contenteditable="true">Your Team is <span class="highlight">Drowning</span> in Manual Work</h2>
+                        <ul>
+                            <li contenteditable="true">Average team spends 15+ hours/week on repetitive data entry</li>
+                            <li contenteditable="true">Error rates of 2-5% lead to rework and client frustration</li>
+                            <li contenteditable="true">Scaling requires hiring more staff (slow and expensive)</li>
+                            <li contenteditable="true">Clients expect faster, more accurate service</li>
+                        </ul>
+                        <div class="callout">
+                            <p contenteditable="true">"We're spending more time on data entry than actually helping our clients."</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Solution -->
+                    <div class="slide">
+                        <span class="slide-number">02</span>
+                        <h2 contenteditable="true">Intelligent Automation <span class="highlight">You Control</span></h2>
+                        <p contenteditable="true">From manual process to automated workflow in under 60 seconds</p>
+                        
+                        <div class="workflow">
+                            <div class="workflow-step">
+                                <div class="workflow-icon">📧</div>
+                                <span contenteditable="true">Input Received</span>
+                            </div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-step">
+                                <div class="workflow-icon">🤖</div>
+                                <span contenteditable="true">AI Processing</span>
+                            </div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-step">
+                                <div class="workflow-icon">✓</div>
+                                <span contenteditable="true">Validation</span>
+                            </div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-step">
+                                <div class="workflow-icon">📊</div>
+                                <span contenteditable="true">Output Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Features -->
+                    <div class="slide">
+                        <span class="slide-number">03</span>
+                        <h2 contenteditable="true">Why <span class="highlight">This Solution</span> Works</h2>
+                        <p contenteditable="true">Built with security and scalability in mind</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card-slide">
+                                <div class="feature-icon-slide">🏢</div>
+                                <div class="feature-text-slide">
+                                    <strong contenteditable="true">Self-Hosted</strong>
+                                    <span contenteditable="true">Runs on YOUR infrastructure, not a third-party cloud</span>
+                                </div>
+                            </div>
+                            <div class="feature-card-slide">
+                                <div class="feature-icon-slide">🔒</div>
+                                <div class="feature-text-slide">
+                                    <strong contenteditable="true">Data Security</strong>
+                                    <span contenteditable="true">All data processed and stored within your network</span>
+                                </div>
+                            </div>
+                            <div class="feature-card-slide">
+                                <div class="feature-icon-slide">🔑</div>
+                                <div class="feature-text-slide">
+                                    <strong contenteditable="true">Full Control</strong>
+                                    <span contenteditable="true">All API credentials and access under your management</span>
+                                </div>
+                            </div>
+                            <div class="feature-card-slide">
+                                <div class="feature-icon-slide">📝</div>
+                                <div class="feature-text-slide">
+                                    <strong contenteditable="true">Audit Trail</strong>
+                                    <span contenteditable="true">Every action logged and fully traceable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Options/Pricing -->
+                    <div class="slide">
+                        <span class="slide-number">04</span>
+                        <h2 contenteditable="true">Flexible <span class="highlight">Options</span></h2>
+                        
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Description</th>
+                                    <th>Best For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong contenteditable="true">Starter</strong></td>
+                                    <td contenteditable="true">Core automation, basic support</td>
+                                    <td contenteditable="true">Small teams getting started</td>
+                                </tr>
+                                <tr>
+                                    <td><strong contenteditable="true">Professional</strong></td>
+                                    <td contenteditable="true">Full features, priority support</td>
+                                    <td contenteditable="true">Growing practices</td>
+                                </tr>
+                                <tr>
+                                    <td><strong contenteditable="true">Enterprise</strong></td>
+                                    <td contenteditable="true">Custom deployment, dedicated support</td>
+                                    <td contenteditable="true">Large organizations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Slide 5: ROI -->
+                    <div class="slide">
+                        <span class="slide-number">05</span>
+                        <h2 contenteditable="true">Return on <span class="highlight">Investment</span></h2>
+                        <p contenteditable="true">Example: Medium-sized accounting team</p>
+                        
+                        <div class="roi-grid">
+                            <div class="roi-card">
+                                <div class="label" contenteditable="true">Hours on Manual Work/Week</div>
+                                <div class="before" contenteditable="true">40 hrs</div>
+                                <div class="after" contenteditable="true">4 hrs</div>
+                            </div>
+                            <div class="roi-card">
+                                <div class="label" contenteditable="true">Monthly Staff Cost</div>
+                                <div class="before" contenteditable="true">$4,000</div>
+                                <div class="after" contenteditable="true">$400</div>
+                            </div>
+                            <div class="roi-card">
+                                <div class="label" contenteditable="true">Error Rate</div>
+                                <div class="before" contenteditable="true">3%</div>
+                                <div class="after" contenteditable="true">0.1%</div>
+                            </div>
+                            <div class="roi-card">
+                                <div class="label" contenteditable="true">Client Capacity</div>
+                                <div class="before" contenteditable="true">20</div>
+                                <div class="after" contenteditable="true">50+</div>
+                            </div>
+                        </div>
+
+                        <div class="big-number">
+                            <div class="number" contenteditable="true">$43,200</div>
+                            <div class="label" contenteditable="true">Annual Savings • Pays for itself in 30 days</div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: What's Included -->
+                    <div class="slide">
+                        <span class="slide-number">06</span>
+                        <h2 contenteditable="true">What's <span class="highlight">Included</span></h2>
+                        
+                        <div class="checklist">
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">Complete solution implementation</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">Custom configuration for your workflow</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">Team training sessions</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">30-day implementation support</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">Documentation & guides</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="check">✓</div>
+                                <span contenteditable="true">Ongoing maintenance options</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7: Next Steps -->
+                    <div class="slide">
+                        <span class="slide-number">07</span>
+                        <h2 contenteditable="true">Next <span class="highlight">Steps</span></h2>
+                        
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-num">1</div>
+                                <div class="step-content">
+                                    <h4 contenteditable="true">Discovery Call</h4>
+                                    <p contenteditable="true">Map your current workflow and identify pain points</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">2</div>
+                                <div class="step-content">
+                                    <h4 contenteditable="true">Proposal Review</h4>
+                                    <p contenteditable="true">Custom solution tailored to your specific needs</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">3</div>
+                                <div class="step-content">
+                                    <h4 contenteditable="true">Pilot Program</h4>
+                                    <p contenteditable="true">Test with a small subset over 30 days</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-num">4</div>
+                                <div class="step-content">
+                                    <h4 contenteditable="true">Full Rollout</h4>
+                                    <p contenteditable="true">Deploy across your entire practice</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 8: CTA -->
+                    <div class="slide cta-slide">
+                        <span class="slide-number">08</span>
+                        <h2 contenteditable="true">Ready to <span class="highlight">Get Started?</span></h2>
+                        <p contenteditable="true">Let's transform your workflow and scale your practice.</p>
+                        
+                        <div class="cta-buttons">
+                            <a href="#" class="btn btn-primary" contenteditable="true">Schedule a Call</a>
+                            <a href="#" class="btn btn-secondary" contenteditable="true">View Demo</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DEMO TAB ==================== -->
+        <div id="demo-tab" class="tab-content">
+            <div class="demo-container">
+                <header class="demo-header">
+                    <div>
+                        <h1 contenteditable="true">Live Dashboard Demo</h1>
+                        <p contenteditable="true">See the solution in action with real-time data</p>
+                    </div>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Processed</div>
+                        <div class="stat-value" contenteditable="true">1,247</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-value" contenteditable="true">99.2%</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-label">Time Saved</div>
+                        <div class="stat-value" contenteditable="true">156 hrs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-value" contenteditable="true">24</div>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <div class="demo-card-header">
+                        <h2>Recent Activity</h2>
+                    </div>
+                    <div class="demo-card-body">
+                        <div class="placeholder-content">
+                            <div class="placeholder-icon">📊</div>
+                            <p contenteditable="true">Connect your data source to display live information here.</p>
+                            <p style="font-size: 0.85rem; margin-top: 8px;">This area can show tables, charts, or any custom content relevant to your demo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CALCULATOR TAB ==================== -->
+        <div id="calculator-tab" class="tab-content">
+            <div class="calculator-container">
+                <header class="calculator-header">
+                    <h1>ROI Calculator</h1>
+                    <p>See your potential savings with automation</p>
+                </header>
+
+                <div class="calculator-grid">
+                    <div class="calc-inputs">
+                        <h3>Your Current Situation</h3>
+                        
+                        <div class="input-group">
+                            <label>Hours spent on manual tasks per week</label>
+                            <input type="number" id="hoursPerWeek" value="20" oninput="calculateROI()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Average hourly labor cost ($)</label>
+                            <input type="number" id="hourlyRate" value="35" oninput="calculateROI()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Current error rate (%)</label>
+                            <input type="number" id="errorRate" value="3" step="0.1" oninput="calculateROI()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Cost per error to fix ($)</label>
+                            <input type="number" id="errorCost" value="50" oninput="calculateROI()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Items processed per month</label>
+                            <input type="number" id="itemsPerMonth" value="500" oninput="calculateROI()">
+                        </div>
+                    </div>
+
+                    <div class="calc-results">
+                        <h3>Your Potential Savings</h3>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Current monthly labor cost</span>
+                            <span class="result-value" id="currentLabor">$2,800</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Current monthly error cost</span>
+                            <span class="result-value" id="currentErrors">$750</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">New monthly labor cost (90% reduction)</span>
+                            <span class="result-value" id="newLabor">$280</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">New monthly error cost (95% reduction)</span>
+                            <span class="result-value" id="newErrors">$38</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Monthly Savings</span>
+                            <span class="result-value highlight" id="monthlySavings">$3,232</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">Annual Savings</span>
+                            <span class="result-value highlight" id="annualSavings">$38,784</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ==================== TAB SWITCHING ====================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`${tab}-tab`).classList.add('active');
+        }
+
+        // ==================== EDIT MODE ====================
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            document.body.classList.toggle('edit-mode', editMode);
+            document.getElementById('editToggle').classList.toggle('active', editMode);
+        }
+
+        // ==================== PDF EXPORT ====================
+        function openPdfModal() {
+            document.getElementById('pdfOverlay').classList.add('active');
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfOverlay').classList.remove('active');
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePdfModal();
+        });
+
+        // ==================== ROI CALCULATOR ====================
+        function calculateROI() {
+            const hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value) || 0;
+            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+            const errorRate = parseFloat(document.getElementById('errorRate').value) || 0;
+            const errorCost = parseFloat(document.getElementById('errorCost').value) || 0;
+            const itemsPerMonth = parseFloat(document.getElementById('itemsPerMonth').value) || 0;
+
+            // Current costs
+            const currentLabor = hoursPerWeek * 4 * hourlyRate;
+            const currentErrors = (errorRate / 100) * itemsPerMonth * errorCost;
+
+            // New costs (90% labor reduction, 95% error reduction)
+            const newLabor = currentLabor * 0.1;
+            const newErrors = currentErrors * 0.05;
+
+            // Savings
+            const monthlySavings = (currentLabor - newLabor) + (currentErrors - newErrors);
+            const annualSavings = monthlySavings * 12;
+
+            // Update display
+            document.getElementById('currentLabor').textContent = formatCurrency(currentLabor);
+            document.getElementById('currentErrors').textContent = formatCurrency(currentErrors);
+            document.getElementById('newLabor').textContent = formatCurrency(newLabor);
+            document.getElementById('newErrors').textContent = formatCurrency(newErrors);
+            document.getElementById('monthlySavings').textContent = formatCurrency(monthlySavings);
+            document.getElementById('annualSavings').textContent = formatCurrency(annualSavings);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', { 
+                style: 'currency', 
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // ==================== CONFIGURATION ====================
+        // Customize these values for each client presentation
+        const config = {
+            client: {
+                name: "Client Name"
+            }
+        };
+
+        function applyConfig(cfg) {
+            if (cfg.client?.name) {
+                document.getElementById('navClient').textContent = `Prepared for: ${cfg.client.name}`;
+                document.title = `CTRL.ALT.I X Accountilytics X MCR | ${cfg.client.name}`;
+            }
+        }
+
+        // ==================== INITIALIZE ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            calculateROI();
+            applyConfig(config);
+        });
+    </script>
+</body>
+</html>
